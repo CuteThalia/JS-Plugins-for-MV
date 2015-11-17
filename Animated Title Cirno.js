@@ -91,7 +91,15 @@
  * @param TitleLogoOpacityIncrease
  * @desc Speed of the logo's fade in when shown at the beginning of the title screen.
  * @default 1
- *    
+ *  
+ * @param TitleSprite1
+ * @desc The name of the first image on your title.
+ * @default TitleBGLoop
+ *  
+ * @param TitleSprite2
+ * @desc The name of the second image on your title.
+ * @default TitleBG
+ *   
  */
 
 // Alias Methods
@@ -108,7 +116,8 @@ Soulpour777.params = PluginManager.parameters('Animated Title Cirno');
 
 // Parameter call
 // var params = PluginManager.parameters('Animated Title Cirno'); 
-
+var titleSprite1 = String(Soulpour777.AnimatedTitleCirno.params['TitleSprite1'] || "TitleBGLoop");
+var titleSprite2 = String(Soulpour777.AnimatedTitleCirno.params['TitleSprite2'] || "TitleBG");
 // Command Parameter
 var title_images_list = Soulpour777.params['TitleCommandImages'].split(/\s*,\s*/).filter(function(value) { return !!value; });
 
@@ -330,8 +339,8 @@ Scene_Title.prototype.createBackground = function() {
 	// forms new title image, loops
     this.title_sprite1 = new TilingSprite();
     this.title_sprite2 = new TilingSprite();
-    this.title_sprite1.bitmap = ImageManager.loadTitle1("TitleBGLoop");
-    this.title_sprite2.bitmap = ImageManager.loadTitle1("TitleBG");
+    this.title_sprite1.bitmap = ImageManager.loadTitle1(titleSprite1);
+    this.title_sprite2.bitmap = ImageManager.loadTitle1(titleSprite2);
     this.title_sprite2.opacity = secondBackgroundOpacity;
     this.title_sprite1.move(0, 0, 816, 624);
     this.title_sprite2.move(0, 0, 816, 624);
@@ -345,7 +354,7 @@ Scene_Title.prototype.create_scrollLineAndText = function() {
 	this.scrollText = new TilingSprite();
 	this.scrollLine.bitmap = ImageManager.loadSystem(scroll_line);
 	this.scrollText.bitmap = ImageManager.loadSystem(scroll_text);
-	this.scrollText.move(0, 0, 816, 30);
+	this.scrollText.move(0, 0, scrollLineWidth, scrollLineHeight);
 	this.addChildAt(this.scrollLine, 3);
 	this.addChildAt(this.scrollText, 4);
 	this.scrollLine.x = 0;
